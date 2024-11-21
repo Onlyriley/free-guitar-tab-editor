@@ -7,13 +7,8 @@ function TabEditor() {
 
   // Save the tab to local storage
   const saveTab = () => {
-    const tabId = Date.now().toString(); // Simple unique ID using timestamp
-    localStorage.setItem(tabId, tabText);
+    localStorage.setItem("savedTab", tabText);
     alert("Tab saved!");
-    // Generate the short link with the unique ID
-    const generatedLink = `${window.location.origin}/tab/${tabId}`;
-    alert(`Generated Link: ${generatedLink}`);
-    console.log(generatedLink);
   };
 
   // Load the saved tab from local storage
@@ -36,11 +31,6 @@ D|--------------------|--------------------|--------------------|---------------
 A|--------------------|--------------------|--------------------|--------------------|
 E|--------------------|--------------------|--------------------|--------------------|`;
     setTabText((prevTab) => prevTab + "\n" + template + "\n");
-  };
-
-  // Add a space between the measures
-  const addSpace = () => {
-    setTabText((prevTab) => prevTab + "   "); // Adds some spacing
   };
 
   return (
@@ -76,12 +66,6 @@ E|--------------------|--------------------|--------------------|---------------
           onClick={insertTemplate}
         >
           Insert Template
-        </button>
-        <button
-          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg"
-          onClick={addSpace}
-        >
-          Add Space
         </button>
       </div>
       <div className="mt-8 w-full max-w-2xl">
