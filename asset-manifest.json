@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/tabby/static/css/main.2f00697f.css",
-    "main.js": "/tabby/static/js/main.5899d88e.js",
-    "index.html": "/tabby/index.html",
-    "main.2f00697f.css.map": "/tabby/static/css/main.2f00697f.css.map",
-    "main.5899d88e.js.map": "/tabby/static/js/main.5899d88e.js.map"
+    "main.css": "/free-guitar-tab-editor/static/css/main.2f00697f.css",
+    "main.js": "/free-guitar-tab-editor/static/js/main.5899d88e.js",
+    "index.html": "/free-guitar-tab-editor/index.html",
+    "main.2f00697f.css.map": "/free-guitar-tab-editor/static/css/main.2f00697f.css.map",
+    "main.5899d88e.js.map": "/free-guitar-tab-editor/static/js/main.5899d88e.js.map"
   },
   "entrypoints": [
     "static/css/main.2f00697f.css",
