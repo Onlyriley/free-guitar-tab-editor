@@ -13,10 +13,10 @@ To install all the node packages.\
 
 ### `npm start`
 
-To run the app in development mode.\
+To run the app in development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
+The page will reload when you make changes.
 
 ## Don't know? Don't care?
 
