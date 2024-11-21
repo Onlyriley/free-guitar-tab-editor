@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tabby/static/css/main.2f00697f.css",
+    "main.js": "/tabby/static/js/main.5899d88e.js",
+    "index.html": "/tabby/index.html",
+    "main.2f00697f.css.map": "/tabby/static/css/main.2f00697f.css.map",
+    "main.5899d88e.js.map": "/tabby/static/js/main.5899d88e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2f00697f.css",
+    "static/js/main.5899d88e.js"
+  ]
+}
