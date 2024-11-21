@@ -4,6 +4,7 @@ function TabEditor() {
   const [tabText, setTabText] = useState("");
   const [previewFontSize, setPreviewFontSize] = useState(16); // Default font size
   const [isTuningModalOpen, setIsTuningModalOpen] = useState(false);
+  const [isChordModalOpen, setIsChordModalOpen] = useState(false); // State for chord modal
   const [tuning, setTuning] = useState(["e", "B", "G", "D", "A", "E"]); // Default tuning
 
   const handleClear = () => setTabText("");
@@ -47,6 +48,9 @@ function TabEditor() {
   const openTuningModal = () => setIsTuningModalOpen(true);
   const closeTuningModal = () => setIsTuningModalOpen(false);
 
+  const openChordModal = () => setIsChordModalOpen(true); // Open chord modal
+  const closeChordModal = () => setIsChordModalOpen(false); // Close chord modal
+
   const updateTuning = (newTuning) => {
     setTuning(newTuning);
     closeTuningModal();
@@ -56,7 +60,6 @@ function TabEditor() {
   const buyCoffee = () => {
     window.open("https://buymeacoffee.com/onlyriley", "_blank", "noopener,noreferrer");
   };
-
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center p-8">
@@ -105,6 +108,12 @@ function TabEditor() {
             onClick={openTuningModal}
           >
             Change Tuning
+          </button>
+          <button
+            className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg"
+            onClick={openChordModal}
+          >
+            Chord Diagrams
           </button>
           <button
             className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg"
@@ -185,9 +194,73 @@ function TabEditor() {
         </div>
       )}
 
+      {/* Chord Modal */}
+      {isChordModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-2xl font-semibold mb-4">Common Guitar Chords</h3>
+            <div className="grid grid-cols-2 gap-4">
+              {/* Replace these examples with actual diagrams or ASCII art */}
+              <div className="text-center">
+                <p className="font-bold">C Major</p>
+                <pre className="bg-gray-700 p-2 rounded-lg">
+                  e|-0-<br />
+                  B|-1-<br />
+                  G|-0-<br />
+                  D|-2-<br />
+                  A|-3-<br />
+                  E|-x-<br />
+                </pre>
+              </div>
+              <div className="text-center">
+                <p className="font-bold">G Major</p>
+                <pre className="bg-gray-700 p-2 rounded-lg">
+                  e|-3-<br />
+                  B|-3-<br />
+                  G|-0-<br />
+                  D|-0-<br />
+                  A|-2-<br />
+                  E|-3-<br />
+                </pre>
+              </div>
+              <div className="text-center">
+                <p className="font-bold">D Major</p>
+                <pre className="bg-gray-700 p-2 rounded-lg">
+                  e|-2-<br />
+                  B|-3-<br />
+                  G|-2-<br />
+                  D|-0-<br />
+                  A|-x-<br />
+                  E|-x-<br />
+                </pre>
+              </div>
+              <div className="text-center">
+                <p className="font-bold">A Minor</p>
+                <pre className="bg-gray-700 p-2 rounded-lg">
+                  e|-0-<br />
+                  B|-1-<br />
+                  G|-2-<br />
+                  D|-2-<br />
+                  A|-0-<br />
+                  E|-x-<br />
+                </pre>
+              </div>
+            </div>
+            <div className="flex justify-end mt-4">
+              <button
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
+                onClick={closeChordModal}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer className="mt-8 text-sm text-gray-500 text-center">
         Created by Riley Simmons. <br />
-        <a href="https://github.com/Onlyriley/free-guitar-tab-editor">Github (contibutions, issues)</a>
+        <a href="https://github.com/Onlyriley/free-guitar-tab-editor">Github (contributions, issues)</a>
       </footer>
     </div>
   );
