@@ -3,16 +3,16 @@ import React, { useState } from "react";
 function TabEditor() {
   const [tabText, setTabText] = useState("");
   const [previewFontSize, setPreviewFontSize] = useState(16); // Default font size
+  const [isTuningModalOpen, setIsTuningModalOpen] = useState(false);
+  const [tuning, setTuning] = useState(["e", "B", "G", "D", "A", "E"]); // Default tuning
 
   const handleClear = () => setTabText("");
 
-  // Save the tab to local storage
   const saveTab = () => {
     localStorage.setItem("savedTab", tabText);
     alert("Tab saved!");
   };
 
-  // Load the saved tab from local storage
   const loadTab = () => {
     const savedTab = localStorage.getItem("savedTab");
     if (savedTab) {
@@ -23,38 +23,40 @@ function TabEditor() {
     }
   };
 
-  // Insert a template with longer measures
   const insertTemplate = () => {
-    const template = `e|--------------------|--------------------|--------------------|--------------------|
-B|--------------------|--------------------|--------------------|--------------------|
-G|--------------------|--------------------|--------------------|--------------------|
-D|--------------------|--------------------|--------------------|--------------------|
-A|--------------------|--------------------|--------------------|--------------------|
-E|--------------------|--------------------|--------------------|--------------------|`;
+    const template = tuning
+      .map((string) => `${string}|--------------------|--------------------|--------------------|--------------------|`)
+      .join("\n");
     setTabText((prevTab) => prevTab + "\n" + template + "\n");
   };
 
-  // Download tab as a text file
   const downloadTab = () => {
     const blob = new Blob([tabText], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-
-    // Create a temporary anchor element
     const a = document.createElement("a");
     a.href = url;
-    a.download = "guitar_tab.txt"; // The default filename
+    a.download = "guitar_tab.txt";
     a.click();
-
-    // Revoke the object URL to free memory
     URL.revokeObjectURL(url);
   };
 
-  // Increase font size
   const increaseFontSize = () => setPreviewFontSize((prevSize) => prevSize + 2);
-
-  // Decrease font size (minimum of 10px for readability)
   const decreaseFontSize = () =>
     setPreviewFontSize((prevSize) => (prevSize > 10 ? prevSize - 2 : prevSize));
+
+  const openTuningModal = () => setIsTuningModalOpen(true);
+  const closeTuningModal = () => setIsTuningModalOpen(false);
+
+  const updateTuning = (newTuning) => {
+    setTuning(newTuning);
+    closeTuningModal();
+    alert("Tuning updated!");
+  };
+
+  const buyCoffee = () => {
+    window.open("https://buymeacoffee.com/onlyriley", "_blank", "noopener,noreferrer");
+  };
+
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center p-8">
@@ -98,6 +100,18 @@ E|--------------------|--------------------|--------------------|---------------
           >
             Download
           </button>
+          <button
+            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg"
+            onClick={openTuningModal}
+          >
+            Change Tuning
+          </button>
+          <button
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg"
+            onClick={buyCoffee}
+          >
+            Buy Me a Coffee ☕
+          </button>
         </div>
       </div>
       {/* Tab Preview */}
@@ -131,8 +145,49 @@ E|--------------------|--------------------|--------------------|---------------
           {tabText}
         </pre>
       </div>
-      <footer className="mt-8 text-sm text-gray-500">
-        Created by Riley Simmons.
+
+      {/* Tuning Modal */}
+      {isTuningModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-2xl font-semibold mb-4">Change Tuning</h3>
+            {tuning.map((string, index) => (
+              <div key={index} className="flex items-center mb-2">
+                <label className="mr-4">{`String ${6 - index}:`}</label>
+                <input
+                  type="text"
+                  value={string}
+                  maxLength={2}
+                  className="w-16 p-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none"
+                  onChange={(e) => {
+                    const updatedTuning = [...tuning];
+                    updatedTuning[index] = e.target.value;
+                    setTuning(updatedTuning);
+                  }}
+                />
+              </div>
+            ))}
+            <div className="flex justify-end mt-4 space-x-4">
+              <button
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
+                onClick={closeTuningModal}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg"
+                onClick={() => updateTuning(tuning)}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <footer className="mt-8 text-sm text-gray-500 text-center">
+        Created by Riley Simmons. <br />
+        <a href="https://github.com/Onlyriley/free-guitar-tab-editor">Github (contibutions, issues)</a>
       </footer>
     </div>
   );
