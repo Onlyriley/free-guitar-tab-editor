@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<TabEditor />}/>
+        <Route path="/free-guitar-tab-editor" element={<TabEditor />}/>
         <Route path="/tabs/:id" element={<TabView/>}/>
       </Routes>
 
