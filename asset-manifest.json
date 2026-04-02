@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/free-guitar-tab-editor/static/css/main.3d5e4483.css",
-    "main.js": "/free-guitar-tab-editor/static/js/main.2e2a3b8b.js",
+    "main.css": "/free-guitar-tab-editor/static/css/main.fab7784f.css",
+    "main.js": "/free-guitar-tab-editor/static/js/main.af090550.js",
     "index.html": "/free-guitar-tab-editor/index.html",
-    "main.3d5e4483.css.map": "/free-guitar-tab-editor/static/css/main.3d5e4483.css.map",
-    "main.2e2a3b8b.js.map": "/free-guitar-tab-editor/static/js/main.2e2a3b8b.js.map"
+    "main.fab7784f.css.map": "/free-guitar-tab-editor/static/css/main.fab7784f.css.map",
+    "main.af090550.js.map": "/free-guitar-tab-editor/static/js/main.af090550.js.map"
   },
   "entrypoints": [
-    "static/css/main.3d5e4483.css",
-    "static/js/main.2e2a3b8b.js"
+    "static/css/main.fab7784f.css",
+    "static/js/main.af090550.js"
   ]
 }
