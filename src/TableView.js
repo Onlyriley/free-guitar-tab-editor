@@ -6,7 +6,7 @@ function TabView() {
   const [tabText, setTabText] = useState("");
 
   useEffect(() => {
-    // Fetch the tab text from localStorage (or from an API if you're using one)
+    // Fetch the tab text from localStorage
     const savedTab = localStorage.getItem(tabId);
     if (savedTab) {
       setTabText(savedTab);

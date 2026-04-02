@@ -1,4 +1,13 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { initializeApp } from "firebase/app"
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
+import app, {signIn, auth, handleLogout } from "./firebase"
+
+
+const db = getFirestore(app);
+const colRef = collection(db, "tabs");
+
 
 function TabEditor() {
   const [tabText, setTabText] = useState("");
@@ -6,6 +15,58 @@ function TabEditor() {
   const [isTuningModalOpen, setIsTuningModalOpen] = useState(false);
   const [isChordModalOpen, setIsChordModalOpen] = useState(false); // State for chord modal
   const [tuning, setTuning] = useState(["e", "B", "G", "D", "A", "E"]); // Default tuning
+  const [publicTabs, setPublicTabs] = useState([]);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [tabTitle, setTabTitle] = useState("")
+  const [tabArtist, setTabArtist] = useState("")
+  const [tabDescription, setTabDescription] = useState("")
+
+  const uploadTab = async () => {
+    try {
+      if (tabTitle === "" || tabArtist === "" || tabText === "") {
+        throw new Error("Tab Information Incomplete")
+      }
+      const docRef = await addDoc(collection(db, "tabs"), {
+        artist: tabArtist,
+        title: tabTitle,
+        description: tabDescription,
+        content: tabText ,
+        username: auth.currentUser.email
+      })
+    } catch (e) {
+      console.error("Uploading error: ", e)
+      alert(e);
+    }
+  };
+
+  const getRandomColor = () => {
+    const colors = ["red", "orange", "yellow", "green", "purple", "blue"];
+    let chosen = colors[Math.floor(Math.random() * colors.length)];
+    console.log(chosen);
+    return chosen;
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      user ? setIsSignedIn(true) : setIsSignedIn(false);
+    });
+    
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(colRef);
+        const tabData = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        setPublicTabs(tabData);
+      } catch (error) {
+        console.error("Error fetching tabs:", error);
+        setPublicTabs([]);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleClear = () => setTabText("");
 
@@ -57,15 +118,43 @@ function TabEditor() {
     alert("Tuning updated!");
   };
 
+
+
   const buyCoffee = () => {
     window.open("https://buymeacoffee.com/onlyriley", "_blank", "noopener,noreferrer");
   };
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center p-8">
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center p-8 space-y-4">
       <h1 className="text-4xl font-bold mb-8">Tabby - Guitar Tab Editor</h1>
-      <div className="w-full max-w-screen-lg">
+      {!isSignedIn && <button className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg" onClick={signIn}>Sign In!</button>}
+      {isSignedIn && 
+        <div className="flex space-x-4">
+          <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg" onClick={handleLogout}>Sign Out!</button>
+          <p>Signed in as: {auth.currentUser.email}</p>
+        </div>}
+      <div className="w-full max-w-screen-lg space-y-4">
         {/* Tab Editor */}
+        <div className="flex space-x-2 justify-center">
+          <p>Title: </p>
+          <textarea 
+            className="w-half h-1 py-4 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-lg"
+            onChange={(e) => setTabTitle(e.target.value)}
+          />
+          <p>Artist: </p>
+          <textarea 
+            className="w-half h-1 py-4 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-lg"
+            onChange={(e) => setTabArtist(e.target.value)}
+          />
+        </div>
+                <div className="flex space-x-2 justify-center">
+          <p>Description: </p>
+          <textarea 
+            className="w-full h-1 py-4 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-lg"
+            onChange={(e) => setTabDescription(e.target.value)}
+          />
+          {isSignedIn && <button className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg" onClick={uploadTab}>Upload</button>}
+        </div>
         <textarea
           className="w-full h-72 p-4 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-lg"
           placeholder="Type your guitar tab here..."
@@ -257,6 +346,18 @@ function TabEditor() {
           </div>
         </div>
       )}
+  <h1 className="text-2xl font-semibold">User Uploaded Tabs</h1>
+    <div className="mt-8 w-full max-w-screen-lg space-x-4 flex">
+      {publicTabs.map(item => (
+        <Link
+          to={"tabs/" + item.id}
+          key={item.id}
+          className={`px-4 py-2 bg-${getRandomColor()}-600 text-white rounded-lg`}
+        >
+          {item.title} by {item.artist}
+        </Link>
+      ))}
+    </div>
 
       <footer className="mt-8 text-sm text-gray-500 text-center">
         Created by Riley Simmons. <br />

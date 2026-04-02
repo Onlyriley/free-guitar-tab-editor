@@ -1,12 +1,18 @@
-import React from 'react';
-import { useState } from 'react';
 import TabEditor from "./TabEditor"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { TabView } from "./TabView"
 
 
 function App() {
   return (
     <div className="App">
-      <TabEditor />
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TabEditor />}/>
+        <Route path="/tabs/:id" element={<TabView/>}/>
+      </Routes>
+
+      </BrowserRouter>
     </div>
   );
 }
