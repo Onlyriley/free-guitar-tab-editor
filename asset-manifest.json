@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/free-guitar-tab-editor/static/css/main.fab7784f.css",
-    "main.js": "/free-guitar-tab-editor/static/js/main.af090550.js",
+    "main.js": "/free-guitar-tab-editor/static/js/main.f799cef2.js",
     "index.html": "/free-guitar-tab-editor/index.html",
     "main.fab7784f.css.map": "/free-guitar-tab-editor/static/css/main.fab7784f.css.map",
-    "main.af090550.js.map": "/free-guitar-tab-editor/static/js/main.af090550.js.map"
+    "main.f799cef2.js.map": "/free-guitar-tab-editor/static/js/main.f799cef2.js.map"
   },
   "entrypoints": [
     "static/css/main.fab7784f.css",
-    "static/js/main.af090550.js"
+    "static/js/main.f799cef2.js"
   ]
 }
