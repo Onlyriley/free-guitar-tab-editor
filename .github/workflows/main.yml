@@ -16,6 +16,7 @@ jobs:
       FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
       FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
       FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       CI: false
       
     steps:
@@ -25,7 +26,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '25'  # Specify the Node.js version you want to use
+        node-version: '18'  # Specify the Node.js version you want to use
 
     - name: Install dependencies
       run: npm install
@@ -41,4 +42,4 @@ jobs:
         git init
         git add .
         git commit -m "Deploy to GitHub Pages"
-        git push --force --quiet "https://${GITHUB_TOKEN}@${GITHUB_REPOSITORY}.github.io" master:gh-pages
+        git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
