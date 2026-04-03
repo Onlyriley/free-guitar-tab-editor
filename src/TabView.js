@@ -33,7 +33,7 @@ function TabView() {
         };
 
         fetchTabById();
-    }, [id, colRef]);
+    }, [id]);
 
     return (
         <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center p-8">
