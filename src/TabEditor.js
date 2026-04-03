@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { initializeApp } from "firebase/app"
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import app, {signIn, auth, handleLogout } from "./firebase"
@@ -26,7 +25,7 @@ function TabEditor() {
       if (tabTitle === "" || tabArtist === "" || tabText === "") {
         throw new Error("Tab Information Incomplete")
       }
-      const docRef = await addDoc(collection(db, "tabs"), {
+      await addDoc(collection(db, "tabs"), {
         artist: tabArtist,
         title: tabTitle,
         description: tabDescription,

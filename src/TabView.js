@@ -1,5 +1,4 @@
 import { useParams, Link } from "react-router-dom";
-import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import app from "./firebase";
