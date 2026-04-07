@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/free-guitar-tab-editor" element={<TabEditor />}/>
-        <Route path="/tabs/:id" element={<TabView/>}/>
+        <Route path="/free-guitar-tab-editor/tabs/:id" element={<TabView/>}/>
       </Routes>
 
       </BrowserRouter>
