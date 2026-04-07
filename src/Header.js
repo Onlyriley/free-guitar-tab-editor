@@ -1,0 +1,33 @@
+import { useState, useEffect } from "react";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
+import app, {signIn, auth, handleLogout } from "./firebase"
+
+function Header() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+        user ? setIsSignedIn(true) : setIsSignedIn(false);
+        });
+        
+        return unsubscribe;
+    }, []);
+
+    return (
+        <>
+            <div className="bg-gray-900 text-white flex flex-col items-center p-8 space-y-4">
+                <h1 className="text-4xl font-bold mb-8">Tabby - Guitar Tab Editor</h1>
+                {!isSignedIn && <button className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg" onClick={signIn}>Sign In!</button>}
+                {isSignedIn && 
+                    <div className="flex space-x-4">
+                    <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg" onClick={handleLogout}>Sign Out!</button>
+                    <p>Signed in as: {auth.currentUser.email}</p>
+                    </div>}
+            </div>
+        </>
+    )
+}
+
+export default Header;

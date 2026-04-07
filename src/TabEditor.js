@@ -3,17 +3,15 @@ import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import app, {signIn, auth, handleLogout } from "./firebase"
 
-
 const db = getFirestore(app);
 const colRef = collection(db, "tabs");
 
-
 function TabEditor() {
   const [tabText, setTabText] = useState("");
-  const [previewFontSize, setPreviewFontSize] = useState(16); // Default font size
+  const [previewFontSize, setPreviewFontSize] = useState(16);
   const [isTuningModalOpen, setIsTuningModalOpen] = useState(false);
-  const [isChordModalOpen, setIsChordModalOpen] = useState(false); // State for chord modal
-  const [tuning, setTuning] = useState(["e", "B", "G", "D", "A", "E"]); // Default tuning
+  const [isChordModalOpen, setIsChordModalOpen] = useState(false);
+  const [tuning, setTuning] = useState(["e", "B", "G", "D", "A", "E"]);
   const [publicTabs, setPublicTabs] = useState([]);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [tabTitle, setTabTitle] = useState("")
@@ -36,13 +34,6 @@ function TabEditor() {
       console.error("Uploading error: ", e)
       alert(e);
     }
-  };
-
-  const getRandomColor = () => {
-    const colors = ["red", "orange", "yellow", "green", "purple", "blue"];
-    let chosen = colors[Math.floor(Math.random() * colors.length)];
-    console.log(chosen);
-    return chosen;
   };
 
   useEffect(() => {
@@ -125,13 +116,6 @@ function TabEditor() {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center p-8 space-y-4">
-      <h1 className="text-4xl font-bold mb-8">Tabby - Guitar Tab Editor</h1>
-      {!isSignedIn && <button className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg" onClick={signIn}>Sign In!</button>}
-      {isSignedIn && 
-        <div className="flex space-x-4">
-          <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg" onClick={handleLogout}>Sign Out!</button>
-          <p>Signed in as: {auth.currentUser.email}</p>
-        </div>}
       <div className="w-full max-w-screen-lg space-y-4">
         {/* Tab Editor */}
         <div className="flex space-x-2 justify-center">
@@ -345,18 +329,6 @@ function TabEditor() {
           </div>
         </div>
       )}
-  <h1 className="text-2xl font-semibold">User Uploaded Tabs</h1>
-    <div className="mt-8 w-full max-w-screen-lg space-x-4 flex">
-      {publicTabs.map(item => (
-        <Link
-          to={"tabs/" + item.id}
-          key={item.id}
-          className={`px-4 py-2 bg-${getRandomColor()}-600 text-white rounded-lg`}
-        >
-          {item.title} by {item.artist}
-        </Link>
-      ))}
-    </div>
 
       <footer className="mt-8 text-sm text-gray-500 text-center">
         Created by Riley Simmons. <br />
