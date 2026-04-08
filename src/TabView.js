@@ -23,7 +23,7 @@ function TabView() {
   const increaseFontSize = () => setPreviewFontSize((prev) => prev + 2);
   const decreaseFontSize = () =>
     setPreviewFontSize((prev) => (prev > 10 ? prev - 2 : prev));
-
+  
   useEffect(() => {
     const fetchTabById = async () => {
       try {

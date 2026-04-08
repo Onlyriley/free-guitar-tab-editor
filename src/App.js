@@ -8,8 +8,8 @@ import Header from "./Header"
 function App() {
   return (
     <div className="App">
-      <Header />
       <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/free-guitar-tab-editor" element={<TabEditor />}/>
         <Route path="/free-guitar-tab-editor/tabs/:id" element={<TabView/>}/>
