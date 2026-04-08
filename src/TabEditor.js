@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
-import { Link } from "react-router-dom";
-import app, {signIn, auth, handleLogout } from "./firebase"
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import app, { auth } from "./firebase"
 
 const db = getFirestore(app);
-const colRef = collection(db, "tabs");
 
 function TabEditor() {
   const [tabText, setTabText] = useState("");
@@ -12,7 +10,6 @@ function TabEditor() {
   const [isTuningModalOpen, setIsTuningModalOpen] = useState(false);
   const [isChordModalOpen, setIsChordModalOpen] = useState(false);
   const [tuning, setTuning] = useState(["e", "B", "G", "D", "A", "E"]);
-  const [publicTabs, setPublicTabs] = useState([]);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [tabTitle, setTabTitle] = useState("")
   const [tabArtist, setTabArtist] = useState("")
@@ -43,20 +40,6 @@ function TabEditor() {
     });
     
     return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const querySnapshot = await getDocs(colRef);
-        const tabData = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-        setPublicTabs(tabData);
-      } catch (error) {
-        console.error("Error fetching tabs:", error);
-        setPublicTabs([]);
-      }
-    };
-    fetchData();
   }, []);
 
   const handleClear = () => setTabText("");

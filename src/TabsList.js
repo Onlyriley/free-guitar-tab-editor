@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import app, { signIn, auth, handleLogout } from "./firebase";
+import app, { auth } from "./firebase";
 
 const db = getFirestore(app);
 const colRef = collection(db, "tabs");

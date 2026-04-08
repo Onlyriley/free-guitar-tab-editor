@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import app, {signIn, auth, handleLogout } from "./firebase"
+import {signIn, auth, handleLogout } from "./firebase"
 
 function Header() {
   const [isSignedIn, setIsSignedIn] = useState(false);
