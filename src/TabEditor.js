@@ -28,7 +28,8 @@ function TabEditor() {
         title: tabTitle,
         description: tabDescription,
         content: tabText ,
-        username: auth.currentUser.email
+        username: auth.currentUser.email,
+        likes: []
       })
     } catch (e) {
       console.error("Uploading error: ", e)
